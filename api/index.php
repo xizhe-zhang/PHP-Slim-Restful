@@ -13,6 +13,22 @@ $app->post('/feedUpdate','feedUpdate'); /* User Feeds  */
 $app->post('/feedDelete','feedDelete'); /* User Feeds  */
 $app->post('/getImages', 'getImages');
 
+// GET route
+$app->get(
+    '/',
+    function () {
+        $template = <<<EOT
+<!DOCTYPE html>
+    <html>
+        <head>
+        <body>
+            <h1>Welcome to Slim!</h1>
+        </body>
+    </html>
+EOT;
+        echo $template;
+    }
+);
 
 $app->run();
 
@@ -199,15 +215,15 @@ function getFeed(){
   
    
     try {
-         
+        
+        echo "getFeed";
+
         if(1){
             $feedData = '';
             $db = getDB();
           
                 $sql = "SELECT * FROM feed  ORDER BY feed_id DESC LIMIT 15";
                 $stmt = $db->prepare($sql);
-                $stmt->bindParam("user_id", $user_id, PDO::PARAM_INT);
-                $stmt->bindParam("lastCreated", $lastCreated, PDO::PARAM_STR);
           
             $stmt->execute();
             $feedData = $stmt->fetchAll(PDO::FETCH_OBJ);

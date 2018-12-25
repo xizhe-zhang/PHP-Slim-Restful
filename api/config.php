@@ -4,22 +4,14 @@ error_reporting(0);
 session_start();
 
 /* DATABASE CONFIGURATION */
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
-define('DB_DATABASE', 'banan');
-define("BASE_URL", "http://localhost/PHP-Slim-Restful/api/");
-define("SITE_KEY", 'yourSecretKey');
+define('DB_DATABASE', 'sqlite:/Users/kitetsu/Projects/repo/lighttpd_plugin/lighttpd1.4/test.db');
+define("SITE_KEY", '123456');
 
 
 function getDB() 
 {
-	$dbhost=DB_SERVER;
-	$dbuser=DB_USERNAME;
-	$dbpass=DB_PASSWORD;
-	$dbname=DB_DATABASE;
-	$dbConnection = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);	
-	$dbConnection->exec("set names utf8");
+	$dbconn=DB_DATABASE;
+	$dbConnection = new PDO("$dbconn");
 	$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbConnection;
 }
@@ -31,7 +23,4 @@ function apiToken($session_uid)
 $key=md5(SITE_KEY.$session_uid);
 return hash('sha256', $key);
 }
-
-
-
 ?>
